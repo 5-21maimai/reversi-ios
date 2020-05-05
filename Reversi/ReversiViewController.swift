@@ -1,6 +1,10 @@
 import UIKit
 
-class ViewController: UIViewController {
+protocol ReversiView: AnyObject {
+    
+}
+
+class ReversiViewController: UIViewController {
     @IBOutlet private var boardView: BoardView!
     
     @IBOutlet private var messageDiskView: DiskView!
@@ -25,6 +29,9 @@ class ViewController: UIViewController {
     private var isAnimating: Bool { animationCanceller != nil }
     
     private var playerCancellers: [Disk: Canceller] = [:]
+    
+    // TODO: - Routerができたら移動させる
+    private lazy var presenter: ReversiPresentation = ReversiPresenter(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +58,7 @@ class ViewController: UIViewController {
 
 // MARK: Reversi logics
 
-extension ViewController {
+extension ReversiViewController {
     /// `side` で指定された色のディスクが盤上に置かれている枚数を返します。
     /// - Parameter side: 数えるディスクの色です。
     /// - Returns: `side` で指定された色のディスクの、盤上の枚数です。
@@ -222,7 +229,7 @@ extension ViewController {
 
 // MARK: Game management
 
-extension ViewController {
+extension ReversiViewController {
     /// ゲームの状態を初期化し、新しいゲームを開始します。
     func newGame() {
         boardView.reset()
@@ -311,7 +318,7 @@ extension ViewController {
 
 // MARK: Views
 
-extension ViewController {
+extension ReversiViewController {
     /// 各プレイヤーの獲得したディスクの枚数を表示します。
     func updateCountLabels() {
         for side in Disk.sides {
@@ -341,7 +348,7 @@ extension ViewController {
 
 // MARK: Inputs
 
-extension ViewController {
+extension ReversiViewController {
     /// リセットボタンが押された場合に呼ばれるハンドラーです。
     /// アラートを表示して、ゲームを初期化して良いか確認し、
     /// "OK" が選択された場合ゲームを初期化します。
@@ -385,7 +392,7 @@ extension ViewController {
     }
 }
 
-extension ViewController: BoardViewDelegate {
+extension ReversiViewController: BoardViewDelegate {
     /// `boardView` の `x`, `y` で指定されるセルがタップされたときに呼ばれます。
     /// - Parameter boardView: セルをタップされた `BoardView` インスタンスです。
     /// - Parameter x: セルの列です。
@@ -403,7 +410,7 @@ extension ViewController: BoardViewDelegate {
 
 // MARK: Save and Load
 
-extension ViewController {
+extension ReversiViewController {
     private var path: String {
         (NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first! as NSString).appendingPathComponent("Game")
     }
@@ -497,11 +504,15 @@ extension ViewController {
 
 // MARK: Additional types
 
-extension ViewController {
+extension ReversiViewController {
     enum Player: Int {
         case manual = 0
         case computer = 1
     }
+}
+
+extension ReversiViewController: ReversiView {
+    
 }
 
 final class Canceller {
