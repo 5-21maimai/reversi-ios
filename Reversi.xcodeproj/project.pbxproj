@@ -96,19 +96,20 @@
 		13930221246122D100310002 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				D636B3A123D43203007F370F /* subviews */,
 				D642BDB723A9FE4500396732 /* ReversiViewController.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
 		};
-		D636B3A123D43203007F370F /* Views */ = {
+		D636B3A123D43203007F370F /* subviews */ = {
 			isa = PBXGroup;
 			children = (
 				D642BDDB23AA137C00396732 /* BoardView.swift */,
 				D642BDD523AA0B3900396732 /* CellView.swift */,
 				D636B39E23D35043007F370F /* DiskView.swift */,
 			);
-			name = Views;
+			name = subviews;
 			sourceTree = "<group>";
 		};
 		D636B3A423D432D3007F370F /* DataTypes */ = {
@@ -147,7 +148,6 @@
 				D642BDBC23A9FE4700396732 /* Assets.xcassets */,
 				D642BDBE23A9FE4700396732 /* LaunchScreen.storyboard */,
 				D642BDC123A9FE4700396732 /* Info.plist */,
-				D636B3A123D43203007F370F /* Views */,
 				D636B3A423D432D3007F370F /* DataTypes */,
 			);
 			path = Reversi;
