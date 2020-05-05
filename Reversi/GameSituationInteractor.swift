@@ -9,7 +9,9 @@
 import Foundation
 
 protocol GameSituationUsecase: AnyObject {
-    
+    // TODO: - gameDataはstructとかにできたらやって
+    func save(gameData: String)
+    func load()
 }
 
 class GameSituationInteractor {
@@ -23,5 +25,13 @@ class GameSituationInteractor {
 }
 
 extension GameSituationInteractor: GameSituationUsecase {
+    func save(gameData: String) {
+        dataStore.save(gameData: gameData)
+    }
+    
+    func load() {
+        
+    }
+    
     
 }
