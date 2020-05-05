@@ -1,10 +1,10 @@
 import UIKit
 
-protocol ReversiView: AnyObject {
+protocol GameView: AnyObject {
     
 }
 
-class ReversiViewController: UIViewController {
+class GameViewController: UIViewController {
     @IBOutlet private var boardView: BoardView!
     
     @IBOutlet private var messageDiskView: DiskView!
@@ -31,7 +31,7 @@ class ReversiViewController: UIViewController {
     private var playerCancellers: [Disk: Canceller] = [:]
     
     // TODO: - Routerができたら移動させる
-    private lazy var presenter: ReversiPresentation = ReversiPresenter(view: self)
+    private lazy var presenter: GamePresentation = GamePresenter(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,7 @@ class ReversiViewController: UIViewController {
 
 // MARK: Reversi logics
 
-extension ReversiViewController {
+extension GameViewController {
     /// `side` で指定された色のディスクが盤上に置かれている枚数を返します。
     /// - Parameter side: 数えるディスクの色です。
     /// - Returns: `side` で指定された色のディスクの、盤上の枚数です。
@@ -229,7 +229,7 @@ extension ReversiViewController {
 
 // MARK: Game management
 
-extension ReversiViewController {
+extension GameViewController {
     /// ゲームの状態を初期化し、新しいゲームを開始します。
     func newGame() {
         boardView.reset()
@@ -318,7 +318,7 @@ extension ReversiViewController {
 
 // MARK: Views
 
-extension ReversiViewController {
+extension GameViewController {
     /// 各プレイヤーの獲得したディスクの枚数を表示します。
     func updateCountLabels() {
         for side in Disk.sides {
@@ -348,7 +348,7 @@ extension ReversiViewController {
 
 // MARK: Inputs
 
-extension ReversiViewController {
+extension GameViewController {
     /// リセットボタンが押された場合に呼ばれるハンドラーです。
     /// アラートを表示して、ゲームを初期化して良いか確認し、
     /// "OK" が選択された場合ゲームを初期化します。
@@ -392,7 +392,7 @@ extension ReversiViewController {
     }
 }
 
-extension ReversiViewController: BoardViewDelegate {
+extension GameViewController: BoardViewDelegate {
     /// `boardView` の `x`, `y` で指定されるセルがタップされたときに呼ばれます。
     /// - Parameter boardView: セルをタップされた `BoardView` インスタンスです。
     /// - Parameter x: セルの列です。
@@ -410,7 +410,7 @@ extension ReversiViewController: BoardViewDelegate {
 
 // MARK: Save and Load
 
-extension ReversiViewController {
+extension GameViewController {
     private var path: String {
         (NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first! as NSString).appendingPathComponent("Game")
     }
@@ -504,14 +504,14 @@ extension ReversiViewController {
 
 // MARK: Additional types
 
-extension ReversiViewController {
+extension GameViewController {
     enum Player: Int {
         case manual = 0
         case computer = 1
     }
 }
 
-extension ReversiViewController: ReversiView {
+extension GameViewController: GameView {
     
 }
 

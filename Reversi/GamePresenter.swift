@@ -8,20 +8,20 @@
 
 import Foundation
 
-protocol ReversiPresentation: AnyObject {
+protocol GamePresentation: AnyObject {
     
 }
 
-class ReversiPresenter {
+class GamePresenter {
     
-    private weak var view: ReversiView?
+    private weak var view: GameView?
     
-    init(view: ReversiView) {
+    init(view: GameView) {
         self.view = view
     }
     
 }
 
-extension ReversiPresenter: ReversiPresentation {
+extension GamePresenter: GamePresentation {
     
 }
