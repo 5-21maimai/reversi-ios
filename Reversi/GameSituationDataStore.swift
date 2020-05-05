@@ -10,7 +10,7 @@ import Foundation
 
 protocol GameSituationRepository: AnyObject {
     func save(gameData: String)
-    func load()
+    func load(completion: (Result<String, FileIOError>) -> Void)
 }
 
 class GameSituationDataStore {
@@ -29,8 +29,15 @@ extension GameSituationDataStore: GameSituationRepository {
         }
     }
     
-    func load() {
+    func load(completion: (Result<String, FileIOError>) -> Void) {
         
+        do {
+            let input = try String(contentsOfFile: path, encoding: .utf8)
+            completion(.success(input))
+            
+        } catch let error {
+            completion(.failure(FileIOError.write(path: path, cause: error)))
+        }
     }
 }
 

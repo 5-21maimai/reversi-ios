@@ -504,13 +504,6 @@ extension GameViewController {
 
 // MARK: Additional types
 
-extension GameViewController {
-    enum Player: Int {
-        case manual = 0
-        case computer = 1
-    }
-}
-
 extension GameViewController: GameView {
     
 }
@@ -558,7 +551,7 @@ extension Disk {
 }
 
 extension Optional where Wrapped == Disk {
-    fileprivate init?<S: StringProtocol>(symbol: S) {
+    init?<S: StringProtocol>(symbol: S) {
         switch symbol {
         case "x":
             self = .some(.dark)
@@ -571,7 +564,7 @@ extension Optional where Wrapped == Disk {
         }
     }
     
-    fileprivate var symbol: String {
+    var symbol: String {
         switch self {
         case .some(.dark):
             return "x"
