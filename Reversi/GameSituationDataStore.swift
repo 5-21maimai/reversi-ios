@@ -9,13 +9,32 @@
 import Foundation
 
 protocol GameSituationRepository: AnyObject {
-    
+    func save(gameData: String)
+    func load()
 }
 
 class GameSituationDataStore {
-    
+    private var path: String {
+        (NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first! as NSString).appendingPathComponent("Game")
+    }
 }
 
 extension GameSituationDataStore: GameSituationRepository {
+    func save(gameData: String) {
+        do {
+            try gameData.write(toFile: path, atomically: true, encoding: .utf8)
+        } catch let error {
+            // TODO: - エラー処理
+//            throw FileIOError.read(path: path, cause: error)
+        }
+    }
     
+    func load() {
+        
+    }
+}
+
+enum FileIOError: Error {
+    case write(path: String, cause: Error?)
+    case read(path: String, cause: Error?)
 }
