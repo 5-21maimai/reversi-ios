@@ -13,6 +13,12 @@ protocol GameSituationUsecase: AnyObject {
 }
 
 class GameSituationInteractor {
+    private let dataStore: GameSituationRepository
+    
+    init(dataStore: GameSituationRepository = GameSituationDataStore()) {
+        self.dataStore = dataStore
+    }
+    
     
 }
 

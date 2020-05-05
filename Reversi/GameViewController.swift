@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
     private var playerCancellers: [Disk: Canceller] = [:]
     
     // TODO: - Routerができたら移動させる
-    private lazy var presenter: GamePresentation = GamePresenter(view: self)
+    private lazy var presenter: GamePresentation = GamePresenter(view: self, interactor: GameSituationInteractor())
     
     override func viewDidLoad() {
         super.viewDidLoad()

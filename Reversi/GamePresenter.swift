@@ -15,9 +15,11 @@ protocol GamePresentation: AnyObject {
 class GamePresenter {
     
     private weak var view: GameView?
+    private let interactor: GameSituationUsecase
     
-    init(view: GameView) {
+    init(view: GameView, interactor: GameSituationUsecase) {
         self.view = view
+        self.interactor = interactor
     }
     
 }
