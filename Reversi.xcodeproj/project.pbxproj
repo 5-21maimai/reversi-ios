@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		132352C02461A9F90092093D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132352BF2461A9F90092093D /* Player.swift */; };
+		132352C2246286F70092093D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132352C1246286F70092093D /* Board.swift */; };
 		13930223246123E500310002 /* GamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13930222246123E500310002 /* GamePresenter.swift */; };
 		139302272461570500310002 /* GameSituationDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139302262461570500310002 /* GameSituationDataStore.swift */; };
 		139302292461588600310002 /* GameSituationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139302282461588600310002 /* GameSituationInteractor.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		132352BF2461A9F90092093D /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		132352C1246286F70092093D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		13930222246123E500310002 /* GamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePresenter.swift; sourceTree = "<group>"; };
 		139302262461570500310002 /* GameSituationDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSituationDataStore.swift; sourceTree = "<group>"; };
 		139302282461588600310002 /* GameSituationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSituationInteractor.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				D642BDD723AA0B5700396732 /* Disk.swift */,
 				132352BF2461A9F90092093D /* Player.swift */,
+				132352C1246286F70092093D /* Board.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			files = (
 				132352C02461A9F90092093D /* Player.swift in Sources */,
 				139302272461570500310002 /* GameSituationDataStore.swift in Sources */,
+				132352C2246286F70092093D /* Board.swift in Sources */,
 				D636B39F23D35043007F370F /* DiskView.swift in Sources */,
 				13930223246123E500310002 /* GamePresenter.swift in Sources */,
 				D642BDD623AA0B3900396732 /* CellView.swift in Sources */,

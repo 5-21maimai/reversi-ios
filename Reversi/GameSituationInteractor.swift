@@ -66,6 +66,34 @@ extension GameSituationInteractor: GameSituationUsecase {
                     }
                 }
                 
+                // board
+                var board = Board()
+                guard lines.count == board.height else {
+                    // TODO: - エラー処理
+                    // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                    return
+                }
+                
+                var y = 0
+                while let line = lines.popFirst() {
+                    var x = 0
+                    for character in line {
+                        let disk = Disk?(symbol: "\(character)").flatMap { $0 }
+                        board.cellContents.append((x: x, y: y, disk: disk))
+                        x += 1
+                    }
+                    guard x == board.width else {
+                        // TODO: - エラー処理
+                        // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                        return
+                    }
+                    y += 1
+                }
+                guard y == board.height else {
+                    // TODO: - エラー処理
+                    // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                    return
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
