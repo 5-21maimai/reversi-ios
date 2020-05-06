@@ -1,6 +1,7 @@
 import UIKit
 
 protocol GameView: AnyObject {
+    func showGame(situation: GameSituation)
     
 }
 
@@ -39,11 +40,7 @@ class GameViewController: UIViewController {
         boardView.delegate = self
         messageDiskSize = messageDiskSizeConstraint.constant
         
-        do {
-            try loadGame()
-        } catch _ {
-            newGame()
-        }
+        presenter.viewDidLoad()
     }
     
     private var viewHasAppeared: Bool = false
@@ -438,64 +435,6 @@ extension GameViewController {
         }
     }
     
-    /// ゲームの状態をファイルから読み込み、復元します。
-    func loadGame() throws {
-        let input = try String(contentsOfFile: path, encoding: .utf8)
-        var lines: ArraySlice<Substring> = input.split(separator: "\n")[...]
-        
-        guard var line = lines.popFirst() else {
-            throw FileIOError.read(path: path, cause: nil)
-        }
-        
-        do { // turn
-            guard
-                let diskSymbol = line.popFirst(),
-                let disk = Optional<Disk>(symbol: diskSymbol.description)
-            else {
-                throw FileIOError.read(path: path, cause: nil)
-            }
-            turn = disk
-        }
-
-        // players
-        for side in Disk.sides {
-            guard
-                let playerSymbol = line.popFirst(),
-                let playerNumber = Int(playerSymbol.description),
-                let player = Player(rawValue: playerNumber)
-            else {
-                throw FileIOError.read(path: path, cause: nil)
-            }
-            playerControls[side.index].selectedSegmentIndex = player.rawValue
-        }
-
-        do { // board
-            guard lines.count == boardView.height else {
-                throw FileIOError.read(path: path, cause: nil)
-            }
-            
-            var y = 0
-            while let line = lines.popFirst() {
-                var x = 0
-                for character in line {
-                    let disk = Disk?(symbol: "\(character)").flatMap { $0 }
-                    boardView.setDisk(disk, atX: x, y: y, animated: false)
-                    x += 1
-                }
-                guard x == boardView.width else {
-                    throw FileIOError.read(path: path, cause: nil)
-                }
-                y += 1
-            }
-            guard y == boardView.height else {
-                throw FileIOError.read(path: path, cause: nil)
-            }
-        }
-
-        updateMessageViews()
-        updateCountLabels()
-    }
-    
     enum FileIOError: Error {
         case write(path: String, cause: Error?)
         case read(path: String, cause: Error?)
@@ -505,6 +444,26 @@ extension GameViewController {
 // MARK: Additional types
 
 extension GameViewController: GameView {
+    
+    // 読み出したゲームの状態を画面に表示します
+    func showGame(situation: GameSituation) {
+        
+        // turn
+        turn = situation.turn
+        
+        // players
+        for (index, player) in situation.players.enumerated() {
+            playerControls[index].selectedSegmentIndex = player.rawValue
+        }
+        
+        // board
+        for cellContent in situation.board.cellContents {
+            boardView.setDisk(cellContent.disk, atX: cellContent.x, y: cellContent.y, animated: false)
+        }
+        
+        updateMessageViews()
+        updateCountLabels()
+    }
     
 }
 

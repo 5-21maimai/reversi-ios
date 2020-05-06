@@ -41,7 +41,7 @@ extension GameSituationInteractor: GameSituationUsecase {
                 
                 guard var line = lines.popFirst() else {
                     // TODO: - エラー処理
-                    // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                    completion(.failure(FileIOError.read(path: nil, cause: nil)))
                     return
                 }
                 
@@ -51,7 +51,7 @@ extension GameSituationInteractor: GameSituationUsecase {
                         let disk = Optional<Disk>(symbol: diskSymbol.description)
                     else {
                         // TODO: - エラー処理
-                        // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                        completion(.failure(FileIOError.read(path: nil, cause: nil)))
                         return
                     }
                     
@@ -66,7 +66,7 @@ extension GameSituationInteractor: GameSituationUsecase {
                         let player = Player(rawValue: playerNumber)
                     else {
                         // TODO: - エラー処理
-                        // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                        completion(.failure(FileIOError.read(path: nil, cause: nil)))
                         return
                     }
                     players.append(player)
@@ -75,7 +75,7 @@ extension GameSituationInteractor: GameSituationUsecase {
                 // board
                 guard lines.count == board.height else {
                     // TODO: - エラー処理
-                    // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                    completion(.failure(FileIOError.read(path: nil, cause: nil)))
                     return
                 }
                 
@@ -89,14 +89,14 @@ extension GameSituationInteractor: GameSituationUsecase {
                     }
                     guard x == board.width else {
                         // TODO: - エラー処理
-                        // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                        completion(.failure(FileIOError.read(path: nil, cause: nil)))
                         return
                     }
                     y += 1
                 }
                 guard y == board.height else {
                     // TODO: - エラー処理
-                    // completion(.failure(FileIOError.read(path: path, cause: nil)))
+                    completion(.failure(FileIOError.read(path: nil, cause: nil)))
                     return
                 }
                 

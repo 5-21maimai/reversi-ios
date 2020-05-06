@@ -42,6 +42,6 @@ extension GameSituationDataStore: GameSituationRepository {
 }
 
 enum FileIOError: Error {
-    case write(path: String, cause: Error?)
-    case read(path: String, cause: Error?)
+    case write(path: String?, cause: Error?)
+    case read(path: String?, cause: Error?)
 }

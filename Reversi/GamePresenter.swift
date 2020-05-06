@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GamePresentation: AnyObject {
-    
+    func viewDidLoad()
 }
 
 class GamePresenter {
@@ -26,4 +26,21 @@ class GamePresenter {
 
 extension GamePresenter: GamePresentation {
     
+    func viewDidLoad() {
+        
+        // ゲームの状態をファイルから読み出す。読み出せなかったら初期化する
+        interactor.get() { result in
+            switch result {
+            case .success(let gameSituation):
+                view?.showGame(situation: gameSituation)
+                
+            case .failure(let error):
+                // TODO: - newGameする
+                print("ゲームの初期化をする")
+            }
+            
+            
+        }
+        
+    }
 }
