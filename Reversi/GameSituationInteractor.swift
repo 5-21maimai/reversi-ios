@@ -11,7 +11,7 @@ import Foundation
 protocol GameSituationUsecase: AnyObject {
     // TODO: - gameDataはstructとかにできたらやって
     func save(gameData: String)
-    func load(completion: (Result<String, FileIOError>) -> Void)
+    func get(completion: (Result<GameSituation, FileIOError>) -> Void)
 }
 
 class GameSituationInteractor {
@@ -29,11 +29,15 @@ extension GameSituationInteractor: GameSituationUsecase {
         dataStore.save(gameData: gameData)
     }
     
-    func load(completion: (Result<String, FileIOError>) -> Void) {
+    func get(completion: (Result<GameSituation, FileIOError>) -> Void) {
         dataStore.load() { result in
             switch result {
             case .success(let input):
                 var lines: ArraySlice<Substring> = input.split(separator: "\n")[...]
+                
+                var turn: Disk?
+                var players: [Player] = []
+                var board = Board()
                 
                 guard var line = lines.popFirst() else {
                     // TODO: - エラー処理
@@ -50,7 +54,8 @@ extension GameSituationInteractor: GameSituationUsecase {
                         // completion(.failure(FileIOError.read(path: path, cause: nil)))
                         return
                     }
-
+                    
+                    turn = disk
                 }
 
                 // players
@@ -64,10 +69,10 @@ extension GameSituationInteractor: GameSituationUsecase {
                         // completion(.failure(FileIOError.read(path: path, cause: nil)))
                         return
                     }
+                    players.append(player)
                 }
                 
                 // board
-                var board = Board()
                 guard lines.count == board.height else {
                     // TODO: - エラー処理
                     // completion(.failure(FileIOError.read(path: path, cause: nil)))
@@ -94,6 +99,10 @@ extension GameSituationInteractor: GameSituationUsecase {
                     // completion(.failure(FileIOError.read(path: path, cause: nil)))
                     return
                 }
+                
+                let gameSituation = GameSituation(board: board, players: players, turn: turn)
+                completion(.success(gameSituation))
+                
             case .failure(let error):
                 completion(.failure(error))
             }

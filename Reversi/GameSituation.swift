@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+struct GameSituation {
+    var board: Board
+    var players: [Player]
+    var turn: Disk?
+}
