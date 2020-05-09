@@ -10,7 +10,7 @@ import Foundation
 
 protocol GameSituationUsecase: AnyObject {
     // TODO: - gameDataはstructとかにできたらやって
-    func save(gameData: String)
+    func save(gameData: GameSituation)
     func get(completion: (Result<GameSituation, FileIOError>) -> Void)
 }
 
@@ -25,9 +25,27 @@ class GameSituationInteractor {
 }
 
 extension GameSituationInteractor: GameSituationUsecase {
-    func save(gameData: String) {
-        dataStore.save(gameData: gameData)
+    func save(gameData: GameSituation) {
+        
+        var output: String = ""
+        output += gameData.turn.symbol
+        
+        for player in gameData.players {
+            output += "\(player.hashValue)"
+        }
+        output += "\n"
+        
+        var board = gameData.board
+        for y in board.yRange {
+            for x in board.xRange {
+                output += board.cellContents.first{ $0.x == x && $0.y == y }!.disk.symbol
+            }
+            output += "\n"
+        }
+        
+        dataStore.save(gameData: output)
     }
+    
     
     func get(completion: (Result<GameSituation, FileIOError>) -> Void) {
         dataStore.load() { result in
@@ -59,6 +77,7 @@ extension GameSituationInteractor: GameSituationUsecase {
                 }
 
                 // players
+                // TODO: - プレイヤーとdiskが紐づいてないよ
                 for side in Disk.sides {
                     guard
                         let playerSymbol = line.popFirst(),

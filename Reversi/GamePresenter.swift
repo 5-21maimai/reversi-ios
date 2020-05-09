@@ -10,6 +10,7 @@ import Foundation
 
 protocol GamePresentation: AnyObject {
     func viewDidLoad()
+    func save() //メソッド名はダミー
 }
 
 class GamePresenter {
@@ -41,6 +42,10 @@ extension GamePresenter: GamePresentation {
             
             
         }
+        
+    }
+    
+    func save() {
         
     }
 }

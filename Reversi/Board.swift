@@ -12,5 +12,8 @@ struct Board {
     let width: Int = 8
     let height: Int = 8
     
+    lazy var xRange: Range<Int> = 0 ..< width
+    lazy var yRange: Range<Int> = 0 ..< height
+    
     var cellContents: [(x: Int, y: Int, disk: Disk?)] = []
 }
