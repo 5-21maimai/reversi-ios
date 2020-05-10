@@ -31,7 +31,7 @@ extension GameSituationInteractor: GameSituationUsecase {
         output += gameData.turn.symbol
         
         for player in gameData.players {
-            output += "\(player.hashValue)"
+            output += "\(player.rawValue)"
         }
         output += "\n"
         

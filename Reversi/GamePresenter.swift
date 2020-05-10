@@ -10,13 +10,21 @@ import Foundation
 
 protocol GamePresentation: AnyObject {
     func viewDidLoad()
-    func save() //メソッド名はダミー
+    func save(turn: Disk?, players: [Player], board: Board) //メソッド名はダミー
 }
 
 class GamePresenter {
     
     private weak var view: GameView?
     private let interactor: GameSituationUsecase
+    
+    private var gameSituation: GameSituation? {
+        didSet {
+            if let situation = gameSituation {
+                view?.showGame(situation: situation)
+            }
+        }
+    }
     
     init(view: GameView, interactor: GameSituationUsecase) {
         self.view = view
@@ -33,7 +41,7 @@ extension GamePresenter: GamePresentation {
         interactor.get() { result in
             switch result {
             case .success(let gameSituation):
-                view?.showGame(situation: gameSituation)
+                self.gameSituation = gameSituation
                 
             case .failure(let error):
                 // TODO: - newGameする
@@ -45,7 +53,13 @@ extension GamePresenter: GamePresentation {
         
     }
     
-    func save() {
+    func save(turn: Disk?, players: [Player], board: Board) {
+        let situation = GameSituation(board: board, players: players, turn: turn)
+        interactor.save(gameData: situation)
         
+        // TODO: - presenterでgameSituationを持っておくようにしたい
+//        if let situation = gameSituation {
+//            interactor.save(gameData: situation)
+//        }
     }
 }

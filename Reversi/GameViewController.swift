@@ -408,36 +408,28 @@ extension GameViewController: BoardViewDelegate {
 // MARK: Save and Load
 
 extension GameViewController {
-    private var path: String {
-        (NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first! as NSString).appendingPathComponent("Game")
-    }
     
     /// ゲームの状態をファイルに書き出し、保存します。
-    func saveGame() throws {
-        var output: String = ""
-        output += turn.symbol
+    func saveGame() {
+        let turn = self.turn
+        var players: [Player] = []
+        var board = Board()
+        
         for side in Disk.sides {
-            output += playerControls[side.index].selectedSegmentIndex.description
+            let player = Player(rawValue: playerControls[side.index].selectedSegmentIndex)!
+            players.append(player)
         }
-        output += "\n"
+        
         
         for y in boardView.yRange {
             for x in boardView.xRange {
-                output += boardView.diskAt(x: x, y: y).symbol
+                let cellContent = (x: x, y: y, disk: boardView.diskAt(x: x, y: y))
+                board.cellContents.append(cellContent)
             }
-            output += "\n"
+
         }
         
-        do {
-            try output.write(toFile: path, atomically: true, encoding: .utf8)
-        } catch let error {
-            throw FileIOError.read(path: path, cause: error)
-        }
-    }
-    
-    enum FileIOError: Error {
-        case write(path: String, cause: Error?)
-        case read(path: String, cause: Error?)
+        presenter.save(turn: turn, players: players, board: board)
     }
 }
 
